@@ -30,13 +30,18 @@ router.get("/:bookId", (req, res, next) => {
         .populate('author')
         .exec()
         .then((doc) => {
+            if(!doc){
+                res
+                .status(404)
+                .json({ message: "No book found for provided ID" });
+            }
             console.log("From database", doc);
             res.status(200).json(doc);
         })
         .catch((err) => {
             res
-            .status(404)
-            .json({ message: "No book found for provided ID" });
+            .status(500)
+            .json({ error: err });
         });
 });
 
