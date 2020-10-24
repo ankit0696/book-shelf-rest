@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Author = require("../models/authors");
 
+// View all authors
 router.get("/", (req, res, next) => {
   Author.find()
     .exec()
@@ -22,6 +23,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
+//View author by author id
 router.get("/:authorId", (req, res, next) => {
   const id = req.params.authorId;
   Author.findById(id)
@@ -42,6 +44,7 @@ router.get("/:authorId", (req, res, next) => {
     });
 });
 
+//update author by author id
 router.post("/:authorId", (req, res, next) => {
   const id = req.params.authorId;
   const props = req.body;
@@ -56,6 +59,7 @@ router.post("/:authorId", (req, res, next) => {
     });
 });
 
+//add new author
 router.post("/", (req, res, next) => {
   const author = new Author({
     _id: new mongoose.Types.ObjectId(),
@@ -67,6 +71,11 @@ router.post("/", (req, res, next) => {
     .save()
     .then((result) => {
       console.log(result);
+    //   if(!result){
+    //       res.status(500).json({
+    //           message: "Invalid author"
+    //       });
+    //   }
       res.status(200).json({
         message: "Post Request at /Author",
         newAuthor: result,

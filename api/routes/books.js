@@ -5,9 +5,11 @@ const mongoose = require("mongoose");
 const Book = require("../models/books");
 const Author = require("../models/authors");
 
+
+//View all books
 router.get("/", (req, res, next) => {
     Book.find()
-        .populate('author','name')
+        .populate('author','name dob')
         .exec()
         .then((doc) => {
             const response = {
@@ -24,6 +26,7 @@ router.get("/", (req, res, next) => {
         });
 });
 
+//View book by book id
 router.get("/:bookId", (req, res, next) => {
     const id = req.params.bookId;
     Book.findById(id)
@@ -45,6 +48,7 @@ router.get("/:bookId", (req, res, next) => {
         });
 });
 
+//Update book by book id
 router.post("/:bookId", (req, res, next) => {
     const id = req.params.bookId;
     const props = req.body;
@@ -57,6 +61,7 @@ router.post("/:bookId", (req, res, next) => {
         .catch((err) => console.log(err));
 });
 
+//Add new book
 router.post("/", (req, res, next) => {
     Author.findById(req.body.author).then(
         author => {
