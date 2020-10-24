@@ -71,11 +71,6 @@ router.post("/", (req, res, next) => {
     .save()
     .then((result) => {
       console.log(result);
-    //   if(!result){
-    //       res.status(500).json({
-    //           message: "Invalid author"
-    //       });
-    //   }
       res.status(200).json({
         message: "Post Request at /Author",
         newAuthor: result,
@@ -83,7 +78,9 @@ router.post("/", (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(501);
+      res.status(501).json({
+          error: err
+      });
     });
 });
 
